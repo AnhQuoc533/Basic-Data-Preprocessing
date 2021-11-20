@@ -28,6 +28,20 @@ class DataPreprocess:
                 f.write(','.join(sample))
                 f.write('\n')
 
+def mode(x):
+    return max(set(x), key=x.count)
+
+def mean(x):
+    x = list(filter(('nan').__ne__, x))
+    return sum([float(i) for i in x])/len(x)
+
+def median(lst):
+    lst = list(filter(('nan').__ne__, lst))
+    lst = [float(i) for i in lst]
+    quotient, remainder = divmod(len(lst), 2)
+    if remainder:
+        return sorted(lst)[quotient]
+    return float(sum(sorted(lst)[quotient - 1:quotient + 1]) / 2)
 
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
