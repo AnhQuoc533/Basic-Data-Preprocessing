@@ -43,11 +43,11 @@ def mode(lst):
     return max(set(lst), key=lst.count)
 
 def mean(lst):
-    x = list(filter(('nan').__ne__, lst))
+    lst = [i for i in lst if i == i]
     return sum([float(i) for i in lst])/len(lst)
 
 def median(lst):
-    lst = list(filter(('nan').__ne__, lst))
+    lst = [i for i in lst if i == i]
     lst = [float(i) for i in lst]
     quotient, remainder = divmod(len(lst), 2)
     if remainder:
@@ -82,7 +82,7 @@ def minmax(lst):
     return lst
 
 def zscore(lst):
-    val = list(filter(('nan').__ne__, lst))
+    val = [i for i in lst if i == i]
     val = [float(i) for i in val]
     mean = sum(val)/len(val)
     std = (sum([(i-mean)**2 for i in val])/len(val))**1/2
