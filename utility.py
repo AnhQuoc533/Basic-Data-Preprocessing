@@ -41,22 +41,20 @@ class DataPreprocess:
                 f.write(','.join(sample))
                 f.write('\n')
 
-    @staticmethod
-    def mean(lst):
-        lst = [i for i in lst if i == i]
-        return sum(lst) / len(lst)
+def mode(lst):
+    return max(set(lst), key=lst.count)
 
-    @staticmethod
-    def mode(lst):
-        return max(set(lst), key=lst.count)
+def mean(lst):
+    lst = [i for i in lst if i == i]
+    return sum([float(i) for i in lst])/len(lst)
 
-    @staticmethod
-    def median(lst):
-        lst = [i for i in lst if i == i]
-        quotient, remainder = divmod(len(lst), 2)
-        if remainder:
-            return sorted(lst)[quotient]
-        return sum(sorted(lst)[quotient - 1:quotient + 1]) / 2
+def median(lst):
+    lst = [i for i in lst if i == i]
+    lst = [float(i) for i in lst]
+    quotient, remainder = divmod(len(lst), 2)
+    if remainder:
+        return sorted(lst)[quotient]
+    return float(sum(sorted(lst)[quotient - 1:quotient + 1]) / 2)
 
 def minsuprow(lst, sup):
     to_be_del = []
@@ -93,6 +91,9 @@ def zscore(lst):
     lst = [(float(i)-mean)/std for i in lst]
     return lst
 
+def del_dupe(lst):
+    lst = [[str(i) for i in j] for j in lst]
+    return [list(i) for i in set([tuple(j) for j in lst])]
 
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
