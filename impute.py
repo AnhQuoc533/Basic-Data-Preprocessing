@@ -1,17 +1,19 @@
 from utility import *
 
 
+def remove_nan(lst):
+    return [i for i in lst if i == i]
+
+
 def mode(lst):
     return max(set(lst), key=lst.count)
 
 
 def mean(lst):
-    lst = [i for i in lst if i == i]
     return sum(lst) / len(lst)
 
 
 def median(lst):
-    lst = [i for i in lst if i == i]
     quotient, remainder = divmod(len(lst), 2)
 
     if remainder:

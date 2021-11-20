@@ -13,6 +13,11 @@ class MyData:
         self.samples = df.values.tolist()
         self.n = len(self.samples)
 
+    def numeric_attributes(self):
+        attribute_set = {}
+        for attribute in self.attributes:
+            pass
+
 
 def minsuprow(lst, sup):
     to_be_del = []
@@ -55,5 +60,3 @@ def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
     parser.add_argument('input', type=str, metavar='INPUT')
     return parser
-    # parser.add_argument('-rc', '--remove-clone', action='store_true', help='Remove duplicate samples.')
-    # parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
