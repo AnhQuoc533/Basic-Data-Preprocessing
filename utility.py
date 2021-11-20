@@ -28,12 +28,12 @@ class DataPreprocess:
                 f.write(','.join(sample))
                 f.write('\n')
 
-def mode(x):
-    return max(set(x), key=x.count)
+def mode(lst):
+    return max(set(lst), key=lst.count)
 
-def mean(x):
-    x = list(filter(('nan').__ne__, x))
-    return sum([float(i) for i in x])/len(x)
+def mean(lst):
+    x = list(filter(('nan').__ne__, lst))
+    return sum([float(i) for i in lst])/len(lst)
 
 def median(lst):
     lst = list(filter(('nan').__ne__, lst))
@@ -42,6 +42,29 @@ def median(lst):
     if remainder:
         return sorted(lst)[quotient]
     return float(sum(sorted(lst)[quotient - 1:quotient + 1]) / 2)
+
+def minsuprow(lst, sup):
+    to_be_del = []
+    for count, value in enumerate(lst):
+        if value.count('nan')/len(value) > sup:
+            to_be_del.append(count)
+    to_be_del = sorted(to_be_del, reverse=True)
+    for i in to_be_del:
+        lst.pop(i)
+    return lst
+
+def minsupcol(lst, sup):
+    to_be_del = []
+    for i in range(len(lst[0])):
+        temp = [row[i] for row in lst]
+        if temp.count('nan')/len(lst[0]) > sup:
+            to_be_del.append(i)
+    to_be_del = sorted(to_be_del, reverse=True)
+    for i in to_be_del:
+        for j in lst:
+            j.pop(i)
+    return lst
+
 
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
