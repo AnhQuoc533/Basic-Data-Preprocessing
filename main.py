@@ -1,5 +1,5 @@
 import pandas as pd
-from ultility import *
+from utility import *
 
 
 if __name__ == '__main__':
