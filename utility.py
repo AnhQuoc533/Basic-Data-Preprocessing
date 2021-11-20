@@ -13,40 +13,6 @@ class MyData:
         self.samples = df.values.tolist()
         self.n = len(self.samples)
 
-    def save_data(self, filename):
-        with open(filename, 'w') as f:
-            f.write(','.join(self.attributes))
-            f.write('\n')
-
-            for sample in self.samples:
-                sample = [str(element) if element == element else '' for element in sample]
-                f.write(','.join(sample))
-                f.write('\n')
-
-    def remove_clone(self):
-        for i in range(self.n - 1):
-            for j in range(1, (self.n - i)//2):
-                ...
-        ...
-
-    @staticmethod
-    def mode(lst):
-        return max(set(lst), key=lst.count)
-
-    @staticmethod
-    def mean(lst):
-        lst = [i for i in lst if i == i]
-        return sum(lst) / len(lst)
-
-    @staticmethod
-    def median(lst):
-        lst = [i for i in lst if i == i]
-        quotient, remainder = divmod(len(lst), 2)
-
-        if remainder:
-            return sorted(lst)[quotient]
-        return sum(sorted(lst)[quotient - 1:quotient + 1]) / 2
-
 
 def minsuprow(lst, sup):
     to_be_del = []
@@ -89,7 +55,5 @@ def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
     parser.add_argument('input', type=str, metavar='INPUT')
     return parser
-    # parser.add_argument('-i', '--impute', choices=['mean', 'median', 'mode'], help='Replace missing values.')
-    # parser.add_argument('-a', '--attribute', action='append', type=str, help='Select attributes to process.')
     # parser.add_argument('-rc', '--remove-clone', action='store_true', help='Remove duplicate samples.')
     # parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
