@@ -41,20 +41,27 @@ class DataPreprocess:
                 f.write(','.join(sample))
                 f.write('\n')
 
-def mode(lst):
-    return max(set(lst), key=lst.count)
+    def remove_clone(self):
+        ...
 
-def mean(lst):
-    lst = [i for i in lst if i == i]
-    return sum([float(i) for i in lst])/len(lst)
+    @staticmethod
+    def mode(lst):
+        return max(set(lst), key=lst.count)
 
-def median(lst):
-    lst = [i for i in lst if i == i]
-    lst = [float(i) for i in lst]
-    quotient, remainder = divmod(len(lst), 2)
-    if remainder:
-        return sorted(lst)[quotient]
-    return float(sum(sorted(lst)[quotient - 1:quotient + 1]) / 2)
+    @staticmethod
+    def mean(lst):
+        lst = [i for i in lst if i == i]
+        return sum(lst) / len(lst)
+
+    @staticmethod
+    def median(lst):
+        lst = [i for i in lst if i == i]
+        quotient, remainder = divmod(len(lst), 2)
+
+        if remainder:
+            return sorted(lst)[quotient]
+        return sum(sorted(lst)[quotient - 1:quotient + 1]) / 2
+
 
 def minsuprow(lst, sup):
     to_be_del = []
@@ -65,6 +72,7 @@ def minsuprow(lst, sup):
     for i in to_be_del:
         lst.pop(i)
     return lst
+
 
 def minsupcol(lst, sup):
     to_be_del = []
@@ -91,9 +99,6 @@ def zscore(lst):
     lst = [(float(i)-mean)/std for i in lst]
     return lst
 
-def del_dupe(lst):
-    lst = [[str(i) for i in j] for j in lst]
-    return [list(i) for i in set([tuple(j) for j in lst])]
 
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
@@ -101,6 +106,8 @@ def create_parser():
     parser.add_argument('-l', '--list', action='store_true', help='List all attributes having missing values.')
     parser.add_argument('-c', '--count', action='store_true', help='Count all samples having missing values.')
     parser.add_argument('-i', '--impute', choices=['mean', 'median', 'mode'], help='Replace missing values.')
+    parser.add_argument('-a', '--attribute', action='append', type=str, help='Select attributes to process.')
+    parser.add_argument('-rc', '--remove-clone', action='store_true', help='Remove duplicate samples.')
     parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
 
     return parser
