@@ -89,6 +89,10 @@ def zscore(lst):
     lst = [(float(i)-mean)/std for i in lst]
     return lst
 
+def del_dupe(lst):
+    lst = [[str(i) for i in j] for j in lst]
+    return [list(i) for i in set([tuple(j) for j in lst])]
+
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
     parser.add_argument('input', type=str, metavar='INPUT')
