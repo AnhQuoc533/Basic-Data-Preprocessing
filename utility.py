@@ -65,6 +65,18 @@ def minsupcol(lst, sup):
             j.pop(i)
     return lst
 
+def minmax(lst):
+    lst = [float(i) for i in lst]
+    lst = [(i-min(lst))/(max(lst)-min(lst)) for i in lst]
+    return lst
+
+def zscore(lst):
+    val = list(filter(('nan').__ne__, lst))
+    val = [float(i) for i in val]
+    mean = sum(val)/len(val)
+    std = (sum([(i-mean)**2 for i in val])/len(val))**1/2
+    lst = [(float(i)-mean)/std for i in lst]
+    return lst
 
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
