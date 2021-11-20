@@ -7,6 +7,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     data = pd.read_csv(args.input)
-    data = MyData(list(data.columns), data.values.tolist())
+    data = DataPreprocess(list(data.columns), data.values.tolist())
 
     execute_commands(data, args)
