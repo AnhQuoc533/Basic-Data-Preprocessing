@@ -1,3 +1,4 @@
+import pandas as pd
 import argparse
 DESC = "Data Preprocessing\n" \
        "This program accepts a CSV file, with comma being the delimiter, as input. In the file, the first row " \
@@ -6,10 +7,11 @@ DESC = "Data Preprocessing\n" \
 
 
 class DataPreprocess:
-    def __init__(self, attributes: list, samples: list):
-        self.attributes = attributes
-        self.samples = samples
-        self.n = len(samples)
+    def __init__(self, df: pd.DataFrame):
+        self.attributes = list(df.columns)
+        self.dtypes = df.dtypes.to_dict()
+        self.samples = df.values.tolist()
+        self.n = df.size
 
     def list_incomplete_attributes(self):
         attr = []
