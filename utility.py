@@ -55,6 +55,74 @@ def zscore(lst):
     lst = [(float(i)-mean)/std for i in lst]
     return lst
 
+def hasLessOrEqualPriority(a, b):
+    if b == '(':
+        return False
+    precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+    try:
+        if precedence[a] <= precedence[b]:
+            return True
+        else:
+            return False
+    except KeyError:
+        return False
+
+def toPostfix(infix):
+    stack = []
+    postfix = []
+    term = ''
+    for c in infix:
+        if c not in {'+', '-', '*', '/', '(', ')'}:
+            term += c
+        else:
+            postfix.append(term)
+            term = ''
+            if c == '(':
+                stack.append(c)
+            elif c == ')':
+                operator = stack.pop()
+                while stack and operator != '(':
+                    postfix += operator
+                    operator = stack.pop()
+            else:
+                while stack and hasLessOrEqualPriority(c, stack[-1]):
+                    postfix += stack.pop()
+                stack.append(c)
+    postfix.append(term)
+    term = ''
+    while stack:
+        postfix += stack.pop()
+    postfix = list(filter(('').__ne__, postfix))
+    return postfix
+
+def eval(lab, lst, pf):
+    stack = []
+    res = []
+    for term in pf:
+        print(*stack, sep='\n', end='\n\n')
+        if '+' in term:
+            a = stack.pop()
+            b = stack.pop()
+            temp = [j + i for i, j in zip(a,b)]
+            stack.append(temp)
+        elif '-' in term:
+            a = stack.pop()
+            b = stack.pop()
+            temp = [j - i for i, j in zip(a, b)]
+            stack.append(temp)
+        elif '*' in term:
+            a = stack.pop()
+            b = stack.pop()
+            temp = [i * j for i, j in zip(a, b)]
+            stack.append(temp)
+        elif '/' in term:
+            a = stack.pop()
+            b = stack.pop()
+            temp = [j / i for i, j in zip(a, b)]
+            stack.append(temp)
+        else:
+            stack.append([row[lab.index(term)] for row in lst])
+    return stack[-1]
 
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
