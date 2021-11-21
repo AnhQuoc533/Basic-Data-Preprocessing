@@ -131,3 +131,25 @@ def eval(lab, lst, pf):
         else:
             stack.append([row[lab.index(term)] for row in lst])
     return stack.pop()
+
+def getTerm(expression):
+    expression = expression.replace('+',',')
+    expression = expression.replace('-',',')
+    expression = expression.replace('*',',')
+    expression = expression.replace('/',',')
+    expression = expression.replace('(',',')
+    expression = expression.replace(')',',')
+    res = expression.split(',')
+    return res
+
+def evaluate(lab, lst, pf):
+    res = []
+    terms = getTerm(pf)
+    for row in lst:
+        temp: dict = {}
+        for i in terms:
+            if i not in '*/+-':
+                temp[i] = float(row[lab.index(i)])
+        tempres = eval(pf, {"__builtins__": None}, temp)
+        res.append(tempres)
+    return res
