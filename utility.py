@@ -9,14 +9,43 @@ class MyData:
     def __init__(self, csv_filename: str):
         df = pd.read_csv(csv_filename)
         self.attributes = list(df.columns)
-        self.dtypes = df.dtypes.to_dict()
-        self.samples = df.values.tolist()
+        self.samples = df.values.astype(str).tolist()
         self.n = len(self.samples)
+        self.dtypes = self.get_dtypes()
 
-    def numeric_attributes(self):
-        attribute_set = {}
+    def get_dtypes(self):
+        dtypes = dict.fromkeys(self.attributes, 'unknown')
+        for j in range(len(self.attributes)):
+            for i in range(self.n):
+                if self.samples[i][j] != 'nan':
+                    dtypes[self.attributes[j]] = 'numeric' if self.isfloat(self.samples[i][j]) else 'nominal'
+                    break
+        return dtypes
+
+    @staticmethod
+    def isfloat(num: str):
+        try:
+            num = float(num)
+            return True
+        except ValueError:
+            return False
+
+    def get_attributes_by_type(self, d_type: str):
+        attribute_set = set()
         for attribute in self.attributes:
-            pass
+            if self.dtypes[attribute] == d_type:
+                attribute_set.add(attribute)
+        return attribute_set
+
+    def save_data(self, filename):
+        with open(filename, 'w') as f:
+            f.write(','.join(self.attributes))
+            f.write('\n')
+
+            for sample in self.samples:
+                sample = [element if element != 'nan' else '' for element in sample]
+                f.write(','.join(sample))
+                f.write('\n')
 
 
 def minsuprow(lst, sup):

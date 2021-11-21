@@ -1,10 +1,6 @@
 from utility import *
 
 
-def remove_nan(lst):
-    return [i for i in lst if i == i]
-
-
 def mode(lst):
     return max(set(lst), key=lst.count)
 
@@ -26,29 +22,45 @@ def add_args(arg_parser):
                             choices=['mean', 'median', 'mode'], help='Choose a imputation method.')
     arg_parser.add_argument('-a', '--attributes', nargs='+', type=str, help='Select attribute(s) to impute.')
     arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
-    return arg_parser
 
 
-def impute(data: MyData, arg):
-    pass
+def impute(data: MyData, method, attributes: set):
+    if method == 'mode':
+        if attributes.issubset(data.get_attributes_by_type('nominal')):
+            for attribute in attributes:
+                index = data.attributes.index(attribute)
+                value = mode([samples[index] for samples in data.samples if samples[index] != 'nan'])
 
+                for samples in data.samples:
+                    if samples[index] == 'nan':
+                        samples[index] = value
+        else:
+            raise ValueError('Selected attributes do not exist or are not nominal.')
 
-def save_data(data: MyData, filename):
-    with open(filename, 'w') as f:
-        f.write(','.join(data.attributes))
-        f.write('\n')
+    elif method in {'mean', 'median'}:
+        if attributes.issubset(data.get_attributes_by_type('numeric')):
+            for attribute in attributes:
+                index = data.attributes.index(attribute)
 
-        for sample in data.samples:
-            sample = [str(element) for element in sample]
-            f.write(','.join(sample))
-            f.write('\n')
+                if method == 'mean':
+                    value = mean([float(samples[index]) for samples in data.samples if samples[index] != 'nan'])
+                else:
+                    value = median([float(samples[index]) for samples in data.samples if samples[index] != 'nan'])
+                value = str(int(value)) if value == int(value) else str(value)
+
+                for samples in data.samples:
+                    if samples[index] == 'nan':
+                        samples[index] = value
+        else:
+            raise ValueError('Selected attributes do not exist or are not numeric.')
 
 
 if __name__ == '__main__':
     parser = create_parser()
+    add_args(parser)
     args = parser.parse_args()
 
     my_data = MyData(args.input)
-    impute(my_data, args)
+    impute(my_data, args.method, set(args.attributes))
     if args.output:
-        save_data(my_data, args.output)
+        my_data.save_data(args.output)

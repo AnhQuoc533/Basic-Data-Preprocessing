@@ -4,7 +4,7 @@ from utility import *
 def list_incomplete_attributes(data: MyData):
     for j in range(len(data.attributes)):
         for i in range(data.n):
-            if data.samples[i][j] != data.samples[i][j]:
+            if data.samples[i][j] == 'nan':
                 print(data.attributes[j])
                 break
 

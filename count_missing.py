@@ -5,7 +5,7 @@ def count_incomplete_samples(data: MyData):
     count = 0
     for sample in data.samples:
         for element in sample:
-            if element != element:
+            if element == 'nan':
                 count += 1
                 break
     return count
