@@ -17,9 +17,9 @@ class MyData:
         self.attributes = list(df.columns)
         self.samples = df.values.astype(str).tolist()
         self.n = len(self.samples)
-        self.dtypes = self.get_dtypes()
+        self.dtypes = self._get_dtypes()
 
-    def get_dtypes(self):
+    def _get_dtypes(self):
         dtypes = dict.fromkeys(self.attributes, 'unknown')
 
         for index, attribute in enumerate(self.attributes):
@@ -38,9 +38,22 @@ class MyData:
             return False
 
     def get_attributes_by_type(self, d_type: str):
+        """
+        ...
+
+        :param d_type: ...
+        :return: ...
+        """
+
         return {attribute for attribute in self.attributes if self.dtypes[attribute] == d_type}
 
-    def save_data(self, filename):
+    def save_data(self, filename: str):
+        """
+        ...
+
+        :param filename: ...
+        """
+
         with open(filename, 'w') as f:
             f.write(','.join(self.attributes))
             f.write('\n')

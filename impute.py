@@ -2,16 +2,35 @@ from utility import *
 
 
 def mode(lst):
+    """
+    ...
+
+    :param lst: ...
+    :return: ...
+    """
     return max(set(lst), key=lst.count)
 
 
 def mean(lst):
+    """
+    ...
+
+    :param lst: ...
+    :return: ...
+    """
+
     return sum(lst) / len(lst)
 
 
 def median(lst):
-    quotient, remainder = divmod(len(lst), 2)
+    """
+    ...
 
+    :param lst: ...
+    :return: ...
+    """
+
+    quotient, remainder = divmod(len(lst), 2)
     if remainder:
         return sorted(lst)[quotient]
     return sum(sorted(lst)[quotient - 1:quotient + 1]) / 2
@@ -25,6 +44,14 @@ def add_args(arg_parser):
 
 
 def impute(data: MyData, method: str, attributes: set):
+    """
+    ...
+
+    :param data: ...
+    :param method: ...
+    :param attributes: ...
+    """
+
     if not len(attributes):
         return
 

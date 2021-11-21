@@ -2,6 +2,13 @@ from utility import *
 
 
 def count_incomplete_samples(data: MyData):
+    """
+    ...
+
+    :param data: ...
+    :return: ...
+    """
+
     count = 0
     for sample in data.samples:
         for value in sample:

@@ -9,6 +9,14 @@ def add_args(arg_parser):
 
 
 def normalize(data: MyData, method: str, attributes: set):
+    """
+    ...
+
+    :param data: ...
+    :param method: ...
+    :param attributes: ...
+    """
+
     if not len(attributes):
         return
     if not attributes.issubset(data.get_attributes_by_type('numeric')):

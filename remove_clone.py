@@ -2,6 +2,12 @@ from utility import *
 
 
 def remove_clone(data: MyData):
+    """
+    ...
+
+    :param data: ...
+    """
+
     new_data = []
     for sample in data.samples:
         if sample not in new_data:

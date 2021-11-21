@@ -2,6 +2,12 @@ from utility import *
 
 
 def list_incomplete_attributes(data: MyData):
+    """
+    ...
+
+    :param data: ...
+    """
+
     for index in range(len(data.attributes)):
         for sample in data.samples:
             if sample[index] == 'nan':
