@@ -16,7 +16,6 @@ def median(lst):
         return sorted(lst)[quotient]
     return sum(sorted(lst)[quotient - 1:quotient + 1]) / 2
 
-
 def add_args(arg_parser):
     arg_parser.add_argument('-m', '--method', required=True,
                             choices=['mean', 'median', 'mode'], help='Choose a imputation method.')

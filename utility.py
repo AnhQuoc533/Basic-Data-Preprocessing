@@ -101,7 +101,7 @@ def toPostfix(infix):
     postfix = []
     term = ''
     for c in infix:
-        if c not in {'+', '-', '*', '/', '(', ')'}:
+        if c not in '+-/*()':
             term += c
         else:
             postfix.append(term)
@@ -118,7 +118,6 @@ def toPostfix(infix):
                     postfix += stack.pop()
                 stack.append(c)
     postfix.append(term)
-    term = ''
     while stack:
         postfix += stack.pop()
     postfix = list(filter(('').__ne__, postfix))
@@ -126,9 +125,7 @@ def toPostfix(infix):
 
 def eval(lab, lst, pf):
     stack = []
-    res = []
     for term in pf:
-        print(*stack, sep='\n', end='\n\n')
         if '+' in term:
             a = stack.pop()
             b = stack.pop()
@@ -151,7 +148,7 @@ def eval(lab, lst, pf):
             stack.append(temp)
         else:
             stack.append([row[lab.index(term)] for row in lst])
-    return stack[-1]
+    return stack.pop()
 
 def create_parser():
     parser = argparse.ArgumentParser(description=DESC)
