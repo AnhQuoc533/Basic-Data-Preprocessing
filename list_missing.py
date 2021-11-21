@@ -2,10 +2,10 @@ from utility import *
 
 
 def list_incomplete_attributes(data: MyData):
-    for j in range(len(data.attributes)):
-        for i in range(data.n):
-            if data.samples[i][j] == 'nan':
-                print(data.attributes[j])
+    for index in range(len(data.attributes)):
+        for sample in data.samples:
+            if sample[index] == 'nan':
+                print(data.attributes[index])
                 break
 
 

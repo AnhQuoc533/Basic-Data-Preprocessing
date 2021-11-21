@@ -16,6 +16,7 @@ def median(lst):
         return sorted(lst)[quotient]
     return sum(sorted(lst)[quotient - 1:quotient + 1]) / 2
 
+
 def add_args(arg_parser):
     arg_parser.add_argument('-m', '--method', required=True,
                             choices=['mean', 'median', 'mode'], help='Choose a imputation method.')
@@ -23,7 +24,10 @@ def add_args(arg_parser):
     arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
 
 
-def impute(data: MyData, method, attributes: set):
+def impute(data: MyData, method: str, attributes: set):
+    if not len(attributes):
+        return
+
     if method == 'mode':
         if attributes.issubset(data.get_attributes_by_type('nominal')):
             for attribute in attributes:
@@ -53,6 +57,9 @@ def impute(data: MyData, method, attributes: set):
         else:
             raise ValueError('Selected attributes do not exist or are not numeric.')
 
+    else:
+        raise ValueError('Invalid imputation method.')
+
 
 if __name__ == '__main__':
     parser = create_parser()
@@ -61,5 +68,6 @@ if __name__ == '__main__':
 
     my_data = MyData(args.input)
     impute(my_data, args.method, set(args.attributes))
+
     if args.output:
         my_data.save_data(args.output)

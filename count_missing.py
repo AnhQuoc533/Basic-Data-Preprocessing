@@ -4,8 +4,8 @@ from utility import *
 def count_incomplete_samples(data: MyData):
     count = 0
     for sample in data.samples:
-        for element in sample:
-            if element == 'nan':
+        for value in sample:
+            if value == 'nan':
                 count += 1
                 break
     return count
