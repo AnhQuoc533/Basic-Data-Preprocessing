@@ -8,6 +8,13 @@ def add_args(arg_parser):
 
 
 def remove_attr(data: MyData, threshold: int):
+    """
+    ...
+
+    :param data: ...
+    :param threshold: ...
+    """
+
     if threshold < 0 or threshold > 100:
         raise ValueError('Threshold value must be in the range 0 - 100.')
     limit = int(data.n * threshold/100)
