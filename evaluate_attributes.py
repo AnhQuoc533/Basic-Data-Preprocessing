@@ -14,7 +14,7 @@ def get_variables(expression: str):
     :return: a set of variables.
     """
 
-    signs = {'+', '-', '*', '/', '(', ')'}
+    signs = {'+', '-', '*', '/', '(', ')', ' '}
     variables = set()
     var = ''
 
@@ -37,7 +37,8 @@ def eval_attributes(data: MyData, expression: str):
     """
     Calculate the math expression of numeric attributes and
     add a new attribute (a new column) to the dataset, whose name is the input expression.
-    Each value in the new attribute is the result of the calculation of corresponding values in ????
+    Each value in the new attribute is the result of the calculation of corresponding values in
+    attributes which are in the expression.
 
     :param data: the dataset.
     :param expression: the math expression of numeric attributes.
@@ -71,5 +72,7 @@ if __name__ == '__main__':
 
         if args.output:
             my_data.save_data(args.output)
+    except SyntaxError:
+        print('Invalid input expression.')
     except Exception as e:
         print(e)
