@@ -39,19 +39,17 @@ class MyData:
 
     def get_attributes_by_type(self, d_type: str):
         """
-        ...
+        Get attributes of specified data type.
 
-        :param d_type: ...
-        :return: ...
+        :param d_type: data type
+        :return: set of attributes
         """
 
         return {attribute for attribute in self.attributes if self.dtypes[attribute] == d_type}
 
     def save_data(self, filename: str):
         """
-        ...
-
-        :param filename: ...
+        Export to a csv file
         """
 
         with open(filename, 'w') as f:

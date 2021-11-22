@@ -9,10 +9,8 @@ def add_args(arg_parser):
 
 def remove_attr(data: MyData, threshold: int):
     """
-    ...
+    Remove attributes whose minimum support is below the threshold.
 
-    :param data: ...
-    :param threshold: ...
     """
 
     if threshold < 0 or threshold > 100:

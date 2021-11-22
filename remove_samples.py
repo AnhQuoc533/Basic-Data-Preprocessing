@@ -9,10 +9,8 @@ def add_args(arg_parser):
 
 def remove_sample(data: MyData, threshold: int):
     """
-    ...
+    Remove attributes with missing value rate over a certain threshold.
 
-    :param data: ...
-    :param threshold: ...
     """
 
     if threshold < 0 or threshold > 100:

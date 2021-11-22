@@ -3,9 +3,8 @@ from utility import *
 
 def remove_clone(data: MyData):
     """
-    ...
+    Remove duplicates
 
-    :param data: ...
     """
 
     new_data = []

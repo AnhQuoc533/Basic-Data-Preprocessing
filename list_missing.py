@@ -3,9 +3,8 @@ from utility import *
 
 def list_incomplete_attributes(data: MyData):
     """
-    ...
+    List attributes with missing values
 
-    :param data: ...
     """
 
     for index in range(len(data.attributes)):

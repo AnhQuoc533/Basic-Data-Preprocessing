@@ -10,11 +10,11 @@ def add_args(arg_parser):
 
 def normalize(data: MyData, method: str, attributes: set):
     """
-    ...
+    Normalize data using either z-score or minmax.
 
-    :param data: ...
-    :param method: ...
-    :param attributes: ...
+    :param data: dataset
+    :param method: method to be used
+    :param attributes: attributes to be normalized
     """
 
     if not len(attributes):

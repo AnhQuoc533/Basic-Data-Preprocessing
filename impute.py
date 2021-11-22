@@ -3,20 +3,20 @@ from utility import *
 
 def mode(lst):
     """
-    ...
+    Return the single most common data point from discrete or nominal data. The mode (when it exists) is the most typical value and serves as a measure of central location.
 
-    :param lst: ...
-    :return: ...
+    :param lst: sequence of data
+    :return: the median of the sequence
     """
     return max(set(lst), key=lst.count)
 
 
 def mean(lst):
     """
-    ...
+    Return the sample arithmetic mean of data which can be a sequence or iterable.
 
-    :param lst: ...
-    :return: ...
+    :param lst: sequence of data
+    :return: the mean of the sequence
     """
 
     return sum(lst) / len(lst)
@@ -24,10 +24,10 @@ def mean(lst):
 
 def median(lst):
     """
-    ...
+    Return the median (middle value) of numeric data, using the common “mean of middle two” method.
 
-    :param lst: ...
-    :return: ...
+    :param lst: sequence of data
+    :return: the median of the sequence
     """
 
     quotient, remainder = divmod(len(lst), 2)
@@ -45,11 +45,11 @@ def add_args(arg_parser):
 
 def impute(data: MyData, method: str, attributes: set):
     """
-    ...
+    Impute NaN data using the mean, mode, or median of an attribute
 
-    :param data: ...
-    :param method: ...
-    :param attributes: ...
+    :param data: dataset
+    :param method: value to fill in
+    :param attributes: attributes whose missing values are to be filled in
     """
 
     if not len(attributes):

@@ -3,10 +3,10 @@ from utility import *
 
 def count_incomplete_samples(data: MyData):
     """
-    ...
+    Count number of NaN values in a dataset.
 
-    :param data: ...
-    :return: ...
+    :param data: dataset
+    :return: an integer representing the number of missing values
     """
 
     count = 0
