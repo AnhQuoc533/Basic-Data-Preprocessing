@@ -60,6 +60,7 @@ if __name__ == '__main__':
     my_data = MyData(args.input)
     try:
         normalize(my_data, args.method, set(args.attributes))
+
         if args.output:
             my_data.save_data(args.output)
     except Exception as e:

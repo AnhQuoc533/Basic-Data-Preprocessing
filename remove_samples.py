@@ -17,7 +17,7 @@ def remove_sample(data: MyData, threshold: float):
 
     if threshold < 0 or threshold > 100:
         raise ValueError('Threshold value must be in the range 0 - 100.')
-    limit = int(data.n * threshold/100)
+    limit = int(len(data.attributes) * threshold/100)
 
     for i in reversed(range(data.n)):
         if data.samples[i].count('nan') > limit:

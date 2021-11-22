@@ -35,6 +35,7 @@ if __name__ == '__main__':
     my_data = MyData(args.input)
     try:
         remove_attr(my_data, args.threshold)
+
         if args.output:
             my_data.save_data(args.output)
     except Exception as e:
