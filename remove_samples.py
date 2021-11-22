@@ -32,7 +32,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     my_data = MyData(args.input)
-    remove_sample(my_data, args.threshold)
+    try:
+        remove_sample(my_data, args.threshold)
 
-    if args.output:
-        my_data.save_data(args.output)
+        if args.output:
+            my_data.save_data(args.output)
+    except Exception as e:
+        print(e)

@@ -58,7 +58,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     my_data = MyData(args.input)
-    normalize(my_data, args.method, set(args.attributes))
-
-    if args.output:
-        my_data.save_data(args.output)
+    try:
+        normalize(my_data, args.method, set(args.attributes))
+        if args.output:
+            my_data.save_data(args.output)
+    except Exception as e:
+        print(e)

@@ -26,4 +26,7 @@ if __name__ == '__main__':
     remove_clone(my_data)
 
     if args.output:
-        my_data.save_data(args.output)
+        try:
+            my_data.save_data(args.output)
+        except Exception as e:
+            print(e)

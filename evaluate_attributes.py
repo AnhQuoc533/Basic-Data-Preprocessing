@@ -66,7 +66,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     my_data = MyData(args.input)
-    eval_attributes(my_data, args.expression)
+    try:
+        eval_attributes(my_data, args.expression)
 
-    if args.output:
-        my_data.save_data(args.output)
+        if args.output:
+            my_data.save_data(args.output)
+    except Exception as e:
+        print(e)
