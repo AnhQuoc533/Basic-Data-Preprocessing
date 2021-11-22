@@ -2,15 +2,17 @@ from utility import *
 
 
 def add_args(arg_parser):
-    arg_parser.add_argument('-t', '--threshold', required=True, type=int,
+    arg_parser.add_argument('-t', '--threshold', required=True, type=float,
                             help='Choose a threshold for missing value rate, from 0 to 100.')
     arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
 
 
-def remove_attr(data: MyData, threshold: int):
+def remove_attr(data: MyData, threshold: float):
     """
-    Remove attributes whose minimum support is below the threshold.
+    Remove attributes in the dataset whose amount of missing values exceeds the threshold.
 
+    :param data: the dataset.
+    :param threshold: the percentage of missing values allowed, (0 - 100).
     """
 
     if threshold < 0 or threshold > 100:

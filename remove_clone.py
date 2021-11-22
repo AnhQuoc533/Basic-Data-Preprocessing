@@ -3,8 +3,9 @@ from utility import *
 
 def remove_clone(data: MyData):
     """
-    Remove duplicates
+    Remove duplicate samples in the dataset.
 
+    :param data: the dataset.
     """
 
     new_data = []

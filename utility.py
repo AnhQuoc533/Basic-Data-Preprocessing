@@ -30,26 +30,35 @@ class MyData:
         return dtypes
 
     @staticmethod
-    def isfloat(num: str):
+    def isfloat(string: str):
+        """
+        Return True if the string is a float number, False otherwise.
+
+        :param string: the string to be asserted.
+        :return: a boolean.
+        """
+
         try:
-            num = float(num)
+            _ = float(string)
             return True
         except ValueError:
             return False
 
     def get_attributes_by_type(self, d_type: str):
         """
-        Get attributes of specified data type.
+        Return a set of attributes of specified data type (numeric or nominal).
 
-        :param d_type: data type
-        :return: set of attributes
+        :param d_type: the name of data type.
+        :return: a set of attributes.
         """
 
         return {attribute for attribute in self.attributes if self.dtypes[attribute] == d_type}
 
     def save_data(self, filename: str):
         """
-        Export to a csv file
+        Save the dataset into a file.
+
+        :param filename: the name or address of the file to be saved to.
         """
 
         with open(filename, 'w') as f:
@@ -60,94 +69,3 @@ class MyData:
                 sample = [element if element != 'nan' else '' for element in sample]
                 f.write(','.join(sample))
                 f.write('\n')
-
-
-def hasLessOrEqualPriority(a, b):
-    if b == '(':
-        return False
-    precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
-    try:
-        if precedence[a] <= precedence[b]:
-            return True
-        else:
-            return False
-    except KeyError:
-        return False
-
-
-def toPostfix(infix):
-    stack = []
-    postfix = []
-    term = ''
-    for c in infix:
-        if c not in '+-/*()':
-            term += c
-        else:
-            postfix.append(term)
-            term = ''
-            if c == '(':
-                stack.append(c)
-            elif c == ')':
-                operator = stack.pop()
-                while stack and operator != '(':
-                    postfix += operator
-                    operator = stack.pop()
-            else:
-                while stack and hasLessOrEqualPriority(c, stack[-1]):
-                    postfix += stack.pop()
-                stack.append(c)
-    postfix.append(term)
-    while stack:
-        postfix += stack.pop()
-    postfix = list(filter(('').__ne__, postfix))
-    return postfix
-
-
-def eval(lab, lst, pf):
-    stack = []
-    for term in pf:
-        if '+' in term:
-            a = stack.pop()
-            b = stack.pop()
-            temp = [j + i for i, j in zip(a,b)]
-            stack.append(temp)
-        elif '-' in term:
-            a = stack.pop()
-            b = stack.pop()
-            temp = [j - i for i, j in zip(a, b)]
-            stack.append(temp)
-        elif '*' in term:
-            a = stack.pop()
-            b = stack.pop()
-            temp = [i * j for i, j in zip(a, b)]
-            stack.append(temp)
-        elif '/' in term:
-            a = stack.pop()
-            b = stack.pop()
-            temp = [j / i for i, j in zip(a, b)]
-            stack.append(temp)
-        else:
-            stack.append([row[lab.index(term)] for row in lst])
-    return stack.pop()
-
-def getTerm(expression):
-    expression = expression.replace('+',',')
-    expression = expression.replace('-',',')
-    expression = expression.replace('*',',')
-    expression = expression.replace('/',',')
-    expression = expression.replace('(',',')
-    expression = expression.replace(')',',')
-    res = expression.split(',')
-    return res
-
-def evaluate(lab, lst, pf):
-    res = []
-    terms = getTerm(pf)
-    for row in lst:
-        temp: dict = {}
-        for i in terms:
-            if i not in '*/+-':
-                temp[i] = float(row[lab.index(i)])
-        tempres = eval(pf, {"__builtins__": None}, temp)
-        res.append(tempres)
-    return res
