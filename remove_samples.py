@@ -7,9 +7,8 @@ def add_args(arg_parser):
     arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
 
 
-def remove_sample(data: MyData, threshold: float):
-    """
-    Remove samples in the dataset whose amount of missing values exceeds the threshold.
+def remove_incomplete_samples(data: MyData, threshold: float):
+    """Remove samples with amount of missing values exceeds the threshold in the dataset.
 
     :param data: the dataset.
     :param threshold: the percentage of missing values allowed, (0 - 100).
@@ -33,7 +32,7 @@ if __name__ == '__main__':
 
     my_data = MyData(args.input)
     try:
-        remove_sample(my_data, args.threshold)
+        remove_incomplete_samples(my_data, args.threshold)
 
         if args.output:
             my_data.save_data(args.output)

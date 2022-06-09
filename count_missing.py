@@ -2,8 +2,7 @@ from utility import *
 
 
 def count_incomplete_samples(data: MyData):
-    """
-    Count the number of samples with missing values in a dataset.
+    """Return the number of samples with missing values in a dataset.
 
     :param data: the dataset.
     :return: an integer representing the number of samples with missing values.
@@ -11,10 +10,8 @@ def count_incomplete_samples(data: MyData):
 
     count = 0
     for sample in data.samples:
-        for value in sample:
-            if value == 'nan':
-                count += 1
-                break
+        if 'nan' in sample:
+            count += 1
     return count
 
 

@@ -12,14 +12,18 @@ def create_parser():
 
 
 class MyData:
-    def __init__(self, csv_filename: str):
-        df = pd.read_csv(csv_filename)
-        self.attributes = list(df.columns)
-        self.samples = df.values.astype(str).tolist()
-        self.n = len(self.samples)
-        self.dtypes = self._get_dtypes()
+    def __init__(self, csv_filename: str, sep=',', use_default_na=True, add_na_values=None):
+        try:
+            df = pd.read_csv(csv_filename, sep=sep, keep_default_na=use_default_na, na_values=add_na_values)
+            self.attributes = list(df.columns)
+            self.samples = df.values.astype(str).tolist()
+            self.n = len(self.samples)
+            self.dtypes = self.__get_dtypes()
+        except FileNotFoundError as e:
+            print(e)
+            exit()
 
-    def _get_dtypes(self):
+    def __get_dtypes(self):
         dtypes = dict.fromkeys(self.attributes, 'unknown')
 
         for index, attribute in enumerate(self.attributes):
@@ -31,8 +35,7 @@ class MyData:
 
     @staticmethod
     def isfloat(string: str):
-        """
-        Return True if the string is a float number, False otherwise.
+        """Return True if the string is a float number, False otherwise.
 
         :param string: the string to be asserted.
         :return: a boolean.
@@ -45,8 +48,7 @@ class MyData:
             return False
 
     def get_attributes_by_type(self, d_type: str):
-        """
-        Return a set of attributes of specified data type (numeric or nominal).
+        """Return a set of attributes of specified data type (numeric or nominal).
 
         :param d_type: the name of data type.
         :return: a set of attributes.
@@ -54,18 +56,19 @@ class MyData:
 
         return {attribute for attribute in self.attributes if self.dtypes[attribute] == d_type}
 
-    def save_data(self, filename: str):
-        """
-        Save the dataset into a file.
+    def save_data(self, csv_filename: str, sep=',', na_repr=''):
+        """Save the dataset into the file.
 
-        :param filename: the name or address of the file to be saved to.
+        :param csv_filename: the name or the path of the .csv file to be saved to.
+        :param sep: field delimiter for the .csv file.
+        :param na_repr: missing data representation.
         """
 
-        with open(filename, 'w') as f:
-            f.write(','.join(self.attributes))
+        with open(csv_filename, 'w') as f:
+            f.write(sep.join(self.attributes))
             f.write('\n')
 
             for sample in self.samples:
-                sample = [element if element != 'nan' else '' for element in sample]
-                f.write(','.join(sample))
+                sample = [element if element != 'nan' else na_repr for element in sample]
+                f.write(sep.join(sample))
                 f.write('\n')

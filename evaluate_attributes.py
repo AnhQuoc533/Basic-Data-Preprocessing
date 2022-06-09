@@ -2,40 +2,24 @@ from utility import *
 
 
 def add_args(arg_parser):
-    arg_parser.add_argument('expression', type=str, help='Input expression of numeric attributes.')
+    arg_parser.add_argument('expression', type=str, help='Input the math expression of numeric attributes.')
     arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
 
 
 def get_variables(expression: str):
-    """
-    Return a set of variables extracted from the given expression.
+    """Return a set of variables extracted from the given expression.
 
     :param expression: a math expression.
     :return: a set of variables.
     """
 
-    signs = {'+', '-', '*', '/', '(', ')', ' '}
-    variables = set()
-    var = ''
-
-    for char in expression:
-        if char not in signs:
-            var += char
-
-        elif var:
-            if not MyData.isfloat(var):
-                variables.add(var)
-            var = ''
-
-    if var and not MyData.isfloat(var):
-        variables.add(var)
-
-    return variables
+    signs = "+-*/()"
+    variables = expression.translate(expression.maketrans(signs, ' '*len(signs)))
+    return set(var for var in variables.split() if not MyData.isfloat(var))
 
 
 def eval_attributes(data: MyData, expression: str):
-    """
-    Calculate the math expression of numeric attributes and
+    """Calculate the input math expression of numeric attributes and
     add a new attribute (a new column) to the dataset, whose name is the input expression.
     Each value in the new attribute is the result of the calculation of corresponding values in
     attributes which are in the expression.
@@ -48,6 +32,7 @@ def eval_attributes(data: MyData, expression: str):
     if not attributes.issubset(data.get_attributes_by_type('numeric')):
         raise ValueError('Attributes in the expression do not exist or are not numeric.')
 
+    # Match attributes and their corresponding index
     indices = [(attribute, data.attributes.index(attribute)) for attribute in attributes]
     map_dict = {}
 

@@ -1,10 +1,15 @@
 from utility import *
 
 
+def add_args(arg_parser):
+    arg_parser.add_argument('-m', '--method', required=True,
+                            choices=['mean', 'median', 'mode'], help='Choose a imputation method.')
+    arg_parser.add_argument('-a', '--attributes', nargs='+', type=str, help='Select attribute(s) to impute.')
+    arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
+
+
 def mode(lst):
-    """
-    Return the single most common data point from discrete or nominal data.
-    The mode (when it exists) is the most typical value and serves as a measure of central location.
+    """Return the single most common element in a sequence or iterable.
 
     :param lst: sequence of data.
     :return: the mode of the sequence.
@@ -14,8 +19,7 @@ def mode(lst):
 
 
 def mean(lst):
-    """
-    Return the sample arithmetic mean of numeric data which can be a sequence or iterable.
+    """Return the arithmetic mean of numeric data which can be a sequence or iterable.
 
     :param lst: sequence of data.
     :return: the mean of the sequence.
@@ -25,8 +29,7 @@ def mean(lst):
 
 
 def median(lst):
-    """
-    Return the median (middle value) of numeric data, using the common "mean of middle two" method.
+    """Return the median (middle value) of numeric data, using the common "mean of middle two" method.
 
     :param lst: sequence of data.
     :return: the median of the sequence.
@@ -38,16 +41,8 @@ def median(lst):
     return sum(sorted(lst)[quotient - 1:quotient + 1]) / 2
 
 
-def add_args(arg_parser):
-    arg_parser.add_argument('-m', '--method', required=True,
-                            choices=['mean', 'median', 'mode'], help='Choose a imputation method.')
-    arg_parser.add_argument('-a', '--attributes', nargs='+', type=str, help='Select attribute(s) to impute.')
-    arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
-
-
 def impute(data: MyData, method: str, attributes: set):
-    """
-    Impute missing values in attributes of the dataset using the method mean or median (for numeric attributes),
+    """Impute missing values in attributes of the dataset using the method mean or median (for numeric attributes)
     or mode (for nominal attributes).
 
     :param data: the dataset.

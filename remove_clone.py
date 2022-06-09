@@ -2,8 +2,7 @@ from utility import *
 
 
 def remove_clone(data: MyData):
-    """
-    Remove duplicate samples in the dataset.
+    """Remove duplicate samples in the dataset.
 
     :param data: the dataset.
     """

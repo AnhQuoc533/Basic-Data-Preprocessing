@@ -8,9 +8,47 @@ def add_args(arg_parser):
     arg_parser.add_argument('-o', '--output', metavar='FILENAME', type=str, help='Save the data into a file.')
 
 
-def normalize(data: MyData, method: str, attributes: set):
+def min_max_scaling(data: MyData, attribute: str):
+    """Scale all values in the numeric attribute into a range of [0,1].
+    Missing values are ignored.
+
+    :param data: the dataset.
+    :param attribute: name of a numeric attribute in the dataset whose values are to be scaled.
     """
-    Normalize values in the numeric attributes of the dataset using z-score or min-max method.
+    
+    index = data.attributes.index(attribute)
+    temp = [float(samples[index]) for samples in data.samples if samples[index] != 'nan']
+    min_val = min(temp)
+    max_val = max(temp)
+
+    for samples in data.samples:
+        if samples[index] != 'nan':
+            samples[index] = str((float(samples[index]) - min_val) / (max_val - min_val))
+
+
+def standardize(data: MyData, attribute: str):
+    """Standardize all values in the numeric attribute by replacing the values with their Z-scores.
+    Missing values are ignored.
+
+    :param data: the dataset.
+    :param attribute: name of a numeric attribute in the dataset whose values are to be standardized.
+    """
+    
+    index = data.attributes.index(attribute)
+    temp = [float(samples[index]) for samples in data.samples if samples[index] != 'nan']
+
+    mean = sum(temp) / len(temp)
+    variance = sum((val - mean)**2 for val in temp) / len(temp)
+    std = variance ** (1/2)
+
+    for samples in data.samples:
+        if samples[index] != 'nan':
+            samples[index] = (float(samples[index]) - mean) / std
+            samples[index] = str(samples[index])
+
+
+def normalize(data: MyData, method: str, attributes: set):
+    """Normalize all values in the numeric attributes of the dataset using z-score or min-max method.
 
     :param data: the dataset.
     :param method: name of normalization method to be used.
@@ -24,29 +62,11 @@ def normalize(data: MyData, method: str, attributes: set):
 
     if method == 'min-max':
         for attribute in attributes:
-            index = data.attributes.index(attribute)
-            temp = [float(samples[index]) for samples in data.samples if samples[index] != 'nan']
-            min_val = min(temp)
-            max_val = max(temp)
-
-            for samples in data.samples:
-                if samples[index] != 'nan':
-                    samples[index] = (float(samples[index]) - min_val) / (max_val - min_val)
-                    samples[index] = str(samples[index])
+            min_max_scaling(data, attribute)
 
     elif method == 'z-score':
         for attribute in attributes:
-            index = data.attributes.index(attribute)
-            temp = [float(samples[index]) for samples in data.samples if samples[index] != 'nan']
-
-            mean = sum(temp) / len(temp)
-            variance = sum([(val-mean)**2 for val in temp]) / len(temp)
-            std = variance**(1/2)
-
-            for samples in data.samples:
-                if samples[index] != 'nan':
-                    samples[index] = (float(samples[index]) - mean) / std
-                    samples[index] = str(samples[index])
+            standardize(data, attribute)
 
     else:
         raise ValueError('Invalid normalization method.')
