@@ -14,7 +14,7 @@ def get_variables(expression: str):
     """
 
     signs = "+-*/()"
-    variables = expression.translate(expression.maketrans(signs, ' '*len(signs)))
+    variables = expression.translate(str.maketrans(signs, ' '*len(signs)))
     return set(var for var in variables.split() if not MyData.isfloat(var))
 
 

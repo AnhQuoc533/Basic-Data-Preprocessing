@@ -7,11 +7,15 @@ def list_incomplete_attributes(data: MyData):
     :param data: the dataset.
     """
 
-    for index in range(len(data.attributes)):
-        for sample in data.samples:
-            if sample[index] == 'nan':
-                print(data.attributes[index])
-                break
+    # for i in range(len(data.attributes)):
+    #     for sample in data.samples:
+    #         if sample[i] == 'nan':
+    #             print(data.attributes[i])
+    #             break
+
+    for i, column in enumerate(zip(*data.samples)):
+        if 'nan' in column:
+            print(data.attributes[i])
 
 
 if __name__ == '__main__':

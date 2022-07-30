@@ -63,11 +63,9 @@ def normalize(data: MyData, method: str, attributes: set):
     if method == 'min-max':
         for attribute in attributes:
             min_max_scaling(data, attribute)
-
     elif method == 'z-score':
         for attribute in attributes:
             standardize(data, attribute)
-
     else:
         raise ValueError('Invalid normalization method.')
 

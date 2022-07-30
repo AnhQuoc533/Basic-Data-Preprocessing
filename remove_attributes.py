@@ -11,7 +11,7 @@ def remove_incomplete_attributes(data: MyData, threshold: float):
     """Remove attributes with amount of missing values exceeds the threshold in the dataset.
 
     :param data: the dataset.
-    :param threshold: the percentage of missing values allowed, (0 - 100).
+    :param threshold: the percentage (0 - 100) of missing values allowed.
     """
 
     if threshold < 0 or threshold > 100:
