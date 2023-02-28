@@ -1,5 +1,5 @@
 # Basic Data Pre-processing
-* Manually pre-processing data without using addition module (numpy, pandas, ...).
+* Manually pre-process data without external modules (NumPy, Pandas, ...).
 * Support command line only.
 
 |FUNCTIONALITY                                                                                 |         FILE           |
